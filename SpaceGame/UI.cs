@@ -106,8 +106,6 @@ namespace SpaceGame
 
         public static void Highlight()
         {
-           
-
             Console.ForegroundColor = ConsoleColor.DarkCyan;
             Console.BackgroundColor = ConsoleColor.DarkMagenta;
         }

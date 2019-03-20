@@ -7,7 +7,9 @@ namespace SpaceGame
     public class App
     {
         List<Location> locations = new List<Location>();
+        List<Ships> ships = new List<Ships>();
 
+        //Ships Ships1;
         Player Trader;
 
         public App()
@@ -53,7 +55,7 @@ namespace SpaceGame
                              1.6M));
             locations.Add(
                new Location("Reach",
-                            "Beautiful vacation locatio and hotspot for glassing.",
+                            "Beautiful vacation location and hotspot for glassing.",
                             17.250, 34.103,
                             new List<Item>() { droid, megaSeed, bottleWater, kryptonite, mrmeeseeks, senzubean, shard},
                             2.0M));
@@ -73,7 +75,26 @@ namespace SpaceGame
             Trader = new Player(locations[0]);
         }
 
-        public void Run()
+    //public void App1()
+    //{
+    //    var spaceCruiser = new Item("Space Cruiser", 3.0);
+    //    var speedster =    new Item("Speedster", 4.0);
+
+    //    ships.Add(
+    //    new Ships("Cruiser",
+    //                   "Standard issue ship with warp speed of 3.0.",
+    //                    new List<Item>() {spaceCruiser},
+    //                    3.0));
+    //    ships.Add(
+    //   new Ships("Speedster",
+    //                  "Tjis one will get you to were you need to go in a hurry clocking in at 4.0 warp speed.",
+    //                   new List<Item>() {speedster},
+    //                   4.0));
+
+    //    Ships1 = new Ships(ships[0]);
+    //}
+
+    public void Run()
         {
             Story.Intro();
 
@@ -88,11 +109,21 @@ namespace SpaceGame
 
             do
             {
+                Random rnd = new Random();
+                string[] secOptions = {" Susan", " Phil", " Asta", " Yusuke", " Alfred", " Yuno", " Midoriya", " Lafter", " Biscuit", " Orga", " Atra",
+                        " Chi-Chi", " Bulma", " Ichigo", " Nelliel", " Harley", " Bruce", " Robyn", " Hinata", " Minato", " Jiraiya", " Neji", "Natsu",
+                        " Levi", " Aizen", " Rukia", " Motoko", "Rick" , "Morty", "Bender", "Zoidberg", "Fry", "Zapp", "Leela", "Kirk", "Spock", "Hon",
+                                                                                                                "Anakin", "Obi wan", "Ahsoka", "Yoda"};
+                int randomNumber = rnd.Next(0, 40);
+                string secText = secOptions[randomNumber];
+
                 Console.Clear();
-
-                Console.WriteLine($"Location: {Trader.location.name}    Age: {Trader.age:f2} years    Schmeckles: {Trader.money:f1}\n");
-
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.WriteLine($"Location: {Trader.location.name}                inventory: {Trader.inventory.Count}                     Name:{secText}                          Twinkies: {Trader.age:f2} boxes                            Schmeckles: {Trader.money:f1}\n");
+                Console.ResetColor();
+                Console.ForegroundColor = ConsoleColor.DarkMagenta;
                 Console.WriteLine(Trader.location.description);
+                Console.ResetColor();
 
                 PrintOptionList();
 
@@ -125,7 +156,9 @@ namespace SpaceGame
 
         private void PrintOptionList()
         {
-            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("Options");
+            Console.ResetColor();
             Console.WriteLine("1. Depart to other worlds");
             Console.WriteLine("2. Buy stuff");
             Console.WriteLine("3. Sell stuff");
@@ -165,7 +198,7 @@ namespace SpaceGame
             if (Trader.inventory.Any())
             {
                 PrintItems(Trader.inventory);
-
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.WriteLine(@" 
                                      o
                                    $""$o
@@ -183,12 +216,12 @@ o o o o    oo'  o'      'o    $$o$'     o o$""  o$      '$  'oo   o o o o
          'oooooooooooooooooooooooooooooooooooooooooooooooooooooo$
           '$$$$'$$$$' $$$$$$$'$$$$$$ ' '$$$$$'$$$$$$'  $$$""$$$$
            $$$oo$$$$   $$$$$$o$$$$$$o' $$$$$$$$$$$$$$ o$$$$o$$$'
-           $""""""""""""""""""""""""""""""""""""""""""""""""""'$
+           $             """"""""""""""""""""""""""""""""""""""""""""""""""'            $
            $$                                                 $$
            $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $
 
                                                                     ");
-
+                Console.ResetColor();
                 var itemIndex = UI.UsersInput("What do ya have furr me: ", 1, Trader.inventory.Count);
 
                 if (!itemIndex.cancelled)
@@ -202,7 +235,7 @@ o o o o    oo'  o'      'o    $$o$'     o o$""  o$      '$  'oo   o o o o
                 UI.UserInput("Press any key to continue...");
             }
         }
-
+        
         private void BuyMenu()
         {
             Console.Clear();
@@ -210,7 +243,7 @@ o o o o    oo'  o'      'o    $$o$'     o o$""  o$      '$  'oo   o o o o
             List<Item> items = Trader.location.items;
 
             PrintItems(items);
-
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine(@"
       0_
        \`.     ___
@@ -240,6 +273,7 @@ o o o o    oo'  o'      'o    $$o$'     o o$""  o$      '$  'oo   o o o o
     |___________|/
 
                                 ");
+            Console.ResetColor();
             var itemIndex = UI.UsersInput("What are yurr looking to buy: ", 1, items.Count);
 
             if (!itemIndex.cancelled)
@@ -255,13 +289,13 @@ o o o o    oo'  o'      'o    $$o$'     o o$""  o$      '$  'oo   o o o o
                 var item = items[i];
                 var cost = Trader.location.CostOf(item);
 
-                Console.WriteLine($"{i + 1}. {item.name} - {cost:f2}Smks");
+                Console.WriteLine($"{i + 1}. {item.name} - {cost:f2} Smks");
             }
         }
 
         
 
-        private void TravelMenu()
+        public void TravelMenu()
         {
             var done = false;
             int selector = 0;

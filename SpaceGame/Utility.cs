@@ -2,7 +2,7 @@
 
 namespace SpaceGame
 {
-    public static class Utility
+    public class Utility
     {
         public static double WarpSpeedToLightSpeed(double w)
         {

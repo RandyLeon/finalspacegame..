@@ -4,6 +4,7 @@ namespace SpaceGame
 {
     public class Player
     {
+        public string name = "Susan"; 
         public double age = 20;
         public decimal money;
 

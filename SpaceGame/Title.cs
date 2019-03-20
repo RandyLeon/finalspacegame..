@@ -10,6 +10,8 @@ namespace SpaceGame
     {
         public static void title()
         {
+            Console.WindowHeight = Console.LargestWindowHeight;
+            Console.WindowWidth = Console.LargestWindowWidth;
 
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine(@"
@@ -64,6 +66,7 @@ namespace SpaceGame
 
         public static void IntroText2()
         {
+            Console.Clear();
             Console.WriteLine(@"you have about 50 years to do your thing, so get to it!
   .      .      .      .      .      .      .      .      .      .      .
 .                               .       .       .       .       .       .
